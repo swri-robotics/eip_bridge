@@ -1,0 +1,162 @@
+config:
+  # Services Fields:
+  # - name: ROS Topic to publish to
+  # - type: ROS service definition
+  Services:
+    - name: 'eip_bridge/read_tag_int8'
+      type: 'ReadTagInt8'
+
+    - name: 'eip_bridge/read_tag_int16'
+      type: 'ReadTagInt16'
+
+    - name: 'eip_bridge/read_tag_int32'
+      type: 'ReadTagInt32'
+
+    - name: 'eip_bridge/read_tag_int64'
+      type: 'ReadTagInt64'
+
+    - name: 'eip_bridge/read_tag_string'
+      type: 'ReadTagString'
+
+    - name: 'eip_bridge/read_tag_array_int8'
+      type: 'ReadTagArrayInt8'
+
+    - name: 'eip_bridge/read_tag_array_int16'
+      type: 'ReadTagArrayInt16'
+
+    - name: 'eip_bridge/read_tag_array_int32'
+      type: 'ReadTagArrayInt32'
+
+    - name: 'eip_bridge/read_tag_array_int64'
+      type: 'ReadTagArrayInt64'
+
+    - name: 'eip_bridge/write_tag_int8'
+      type: 'WriteTagInt8'
+
+    - name: 'eip_bridge/write_tag_int16'
+      type: 'WriteTagInt16'
+
+    - name: 'eip_bridge/write_tag_int32'
+      type: 'WriteTagInt32'
+
+    - name: 'eip_bridge/write_tag_int64'
+      type: 'WriteTagInt64'
+
+    - name: 'eip_bridge/write_tag_string'
+      type: 'WriteTagString'
+
+    - name: 'eip_bridge/write_tag_array_int8'
+      type: 'WriteTagArrayInt8'
+
+    - name: 'eip_bridge/write_tag_array_int16'
+      type: 'WriteTagArrayInt16'
+
+    - name: 'eip_bridge/write_tag_array_int32'
+      type: 'WriteTagArrayInt32'
+
+    - name: 'eip_bridge/write_tag_array_int64'
+      type: 'WriteTagArrayInt64'
+
+  # Subscriber Fields:
+  # - name: ROS Topic to publish to
+  # - type: ROS std_msgs data type
+  # - length: array length, or 0 if not an array
+  # - tag (optional): plc tag name; otherwise plc tag name = topic name without eip_bridge/
+  #   Example: eip_bridge/plc_tag_name OR eip_bridge/plc/tag/name OR eip_bridge/some_topic and tag key
+  Subscribers:
+    - name: 'eip_bridge/write_tag_int8'
+      tag:  'int8_tag'
+      type: 'Int8'
+      length: 0
+
+    - name: 'eip_bridge/write_tag_int16'
+      tag:  'pyThk.scanLen'
+      type: 'Int16'
+      length: 0
+
+    - name: 'eip_bridge/write_tag_int32'
+      tag: 'int32_tag'
+      type: 'Int32'
+      length: 0
+
+    - name: 'eip_bridge/write_tag_int64'
+      tag: 'int64_tag'
+      type: 'Int64'
+      length: 0
+
+    - name: 'eip_bridge/write_tag_string'
+      tag: 'string_tag'
+      type: 'String'
+      length: 0
+
+    - name: 'eip_bridge/write_tag_array_int8'
+      tag: 'int8_array_tag'
+      type: 'Int8MultiArray'
+      length: 5
+
+    - name: 'eip_bridge/write_tag_array_int16'
+      tag: 'int16_array_tag'
+      type: 'Int16MultiArray'
+      length: 100
+
+    - name: 'eip_bridge/write_tag_array_int32'
+      tag: 'int32_array_tag'
+      type: 'Int32MultiArray'
+      length: 5
+
+    - name: 'eip_bridge/write_tag_array_int64'
+      tag: 'int64_array_tag'
+      type: 'Int64MultiArray'
+      length: 100
+
+  # Publisher Fields:
+  # - name: ROS Topic to publish to
+  # - type: ROS std_msgs data type
+  # - length: array length, or 0 if not an array
+  # - tag (optional): plc tag name; otherwise plc tag name = topic name without eip_bridge/
+  #   Example: eip_bridge/plc_tag_name OR eip_bridge/plc/tag/name OR eip_bridge/some_topic and tag key
+  Publishers:
+    - name: 'eip_bridge/read_tag_int8'
+      tag: 'int8_tag'
+      type: 'Int8'
+      length: 0
+
+    - name: 'eip_bridge/pyThk/scanLen'
+      tag: 'pyThk.scanLen'
+      type: 'Int16'
+      length: 0
+
+    - name: 'eip_bridge/read_tag_int32'
+      tag: 'int32_tag'
+      type: 'Int32'
+      length: 0
+
+    - name: 'eip_bridge/read_tag_int64'
+      tag: 'int64_tag'
+      type: 'Int64'
+      length: 0
+
+    - name: 'eip_bridge/read_tag_string'
+      tag: 'string_tag'
+      type: 'String'
+      length: 0
+
+    - name: 'eip_bridge/read_tag_array_int8'
+      tag: 'int8_array_tag'
+      type: 'Int8MultiArray'
+      length: 5
+
+    - name: 'eip_bridge/read_tag_array_int16'
+      tag: 'int16_array_tag'
+      type: 'Int16MultiArray'
+      length: 100
+
+    - name: 'eip_bridge/read_tag_array_int32'
+      tag: 'int32_array_tag'
+      type: 'Int32MultiArray'
+      length: 5
+
+    - name: 'eip_bridge/read_tag_array_int64'
+      tag: 'int64_array_tag'
+      type: 'Int64MultiArray'
+      length: 100

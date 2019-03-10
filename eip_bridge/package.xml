@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>eip_bridge</name>
+  <version>0.1.0</version>
+  <license>BSD</license>
+
+  <description>EIP bridge to/from ROS messages</description>
+
+  <maintainer email="wmccormick@swri.org">Bill McCormick</maintainer>
+  <author email="wmccormick@swri.org">Bill McCormick</author>
+  <author email="andrew64ce@gmail.com">Andrew Cunningham</author>
+  <author email="jzoss@swri.org">Jeremy Zoss</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>eip_msgs</depend>
+  <depend>rospy</depend>
+
+</package>

@@ -1,0 +1,9 @@
+<launch>
+  <arg name="pub_rate" default="10" doc="rate of topic publisher (Hz)"/>
+  <arg name="config_file" default="$(find eip_bridge)/example/eip_simulation.yaml"/>
+
+  <node name="eip_bridge_simulator" pkg="eip_bridge" type="eip_bridge_simulator_node.py" output="screen">
+    <param name="pub_rate"    value="$(arg pub_rate)"/>
+    <rosparam command="load" file="$(arg config_file)" />
+  </node>
+</launch>

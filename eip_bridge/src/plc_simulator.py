@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+# WARING: pip install pycomm may not install the latest pycomm; better to install from the github repo
+
+import rospy
+import signal
+
+from time import sleep
+
+class Tag:
+    def __init__(self, name):
+        self.name = name
+        self.value = None
+
+    def getName(self):
+        return self.name
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, value):
+        self.value = value
+
+class PLCSimulator:
+    def __init__(self):
+      self.tags = {}
+      self.active = False
+
+    def is_connected(self):
+        return self.active
+
+    def connect_plc(self, ip):
+        self.active = True
+        return self.active
+
+    def disconnect_plc(self):
+        self.active = False
+
+    def add_tag(self, tag_name, length):
+        tag = Tag(tag_name)
+        if length > 0:
+            tag.setValue(zip(range(length), [0 for i in range(0, length)]))
+        self.tags[tag_name] = tag
+
+    def parse_config(self, config):
+      # Try to load tags from the publishers namespace
+      for ns in config:
+          # Try to load the entries under each namespace
+          try:
+              entry = config[ns]
+
+              rospy.loginfo("Attempting to load tags from '{0}' namespace".format(ns))
+              for cfg in entry:
+                  try:
+                    tag_name = cfg['tag']
+                    length = cfg['length']
+                    self.add_tag(tag_name, length)
+
+                  except KeyError as ke:
+                      rospy.logwarn("'{0}' entry does not exist".format(ke.message))
+
+          except Exception as e:
+              rospy.logwarn("No tags defined in '{0}' namespace".format(ns))
+
+    def write_to_tag(self, tag_name, value):
+        if self.is_connected():
+            try:
+                tag = self.tags[tag_name]
+                tag.setValue(value)
+                return tag_name
+
+            except KeyError as e:
+                raise Exception('Tag "{}" does not exist'.format(e.message))
+
+        else:
+            raise Exception('PLC is not currently connected')
+
+
+    def read_from_tag(self, tag_name):
+        if self.is_connected():
+            try:
+                tag = self.tags[tag_name]
+                return tag.getValue()
+
+            except KeyError as e:
+                raise Exception('Tag "{}" does not exist'.format(e.message))
+
+        else:
+            raise Exception('PLC is not currently connected')
+
+    def read_tag_array(self, tag_name, length):
+        return self.read_from_tag(tag_name)
+
+    def read_tag(self, tag_name):
+        return self.read_from_tag(tag_name)
+
+    def read_tag_string(self, tag_name):
+        return self.read_from_tag(tag_name)
+
+    def write_tag_array(self, tag_name, value_list, tag_type):
+        # Value is a list, but needs to be stored as a tuple
+        value_tuple = zip(range(len(value_list)), value_list)
+        return self.write_to_tag(tag_name, value_tuple)
+
+    def write_tag(self, tag_name, value, tag_type):
+        return self.write_to_tag(tag_name, value)
+
+    def write_tag_string(self, tag_name, value):
+        return self.write_to_tag(tag_name, value)
