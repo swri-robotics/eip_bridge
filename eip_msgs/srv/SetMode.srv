@@ -1,0 +1,11 @@
+# Request
+int8 RUN = 0
+int8 DEBUG = 1
+int8 SLEEP = 2
+
+int8 mode
+
+---
+# Response
+bool success
+string msg
