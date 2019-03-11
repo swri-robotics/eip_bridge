@@ -7,9 +7,9 @@ import signal
 from time import sleep
 
 class Tag:
-    def __init__(self, name):
+    def __init__(self, name, value=None):
         self.name = name
-        self.value = None
+        self.value = value
 
     def getName(self):
         return self.name
@@ -35,10 +35,10 @@ class PLCSimulator:
     def disconnect_plc(self):
         self.active = False
 
-    def add_tag(self, tag_name, length):
-        tag = Tag(tag_name)
+    def add_tag(self, tag_name, length, value=None):
+        tag = Tag(tag_name, value)
         if length > 0:
-            tag.setValue(zip(range(length), [0 for i in range(0, length)]))
+            tag.setValue(zip(range(length), [value for i in range(0, length)]))
         self.tags[tag_name] = tag
 
     def parse_config(self, config):
@@ -53,10 +53,19 @@ class PLCSimulator:
                   try:
                     tag_name = cfg['tag']
                     length = cfg['length']
-                    self.add_tag(tag_name, length)
+
+                    try:
+                        value = cfg['value']
+                    except KeyError as value_ke:
+                        rospy.logwarn("'{0}' entry does not exist for '{1}'; setting '{0}' to 'None'".format(value_ke.message, tag_name))
+                        value = None
+
+                    self.add_tag(tag_name, length, value)
 
                   except KeyError as ke:
                       rospy.logwarn("'{0}' entry does not exist".format(ke.message))
+                  except Exception as ex:
+                      rospy.logwarn("Exception: {0}".format(ex.message))
 
           except Exception as e:
               rospy.logwarn("No tags defined in '{0}' namespace".format(ns))
