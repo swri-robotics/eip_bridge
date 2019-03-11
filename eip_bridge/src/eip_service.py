@@ -156,6 +156,9 @@ class Service:
     def handle_read_tag_string(self, req):
         return self.read_tag_string(req)
 
+    def handle_read_tag_float32(self, req):
+        return self.read_tag(req)
+
     def handle_read_tag_array_int8(self, req):
         return self.read_tag_array(req)
 
@@ -166,6 +169,9 @@ class Service:
         return self.read_tag_array(req)
 
     def handle_read_tag_array_int64(self, req):
+        return self.read_tag_array(req)
+
+    def handle_read_tag_array_float32(self, req):
         return self.read_tag_array(req)
 
     def handle_read_tag_bool(self, req):
@@ -183,6 +189,9 @@ class Service:
     def handle_write_tag_int64(self, req):
         return self.write_tag(req, 'LINT')
 
+    def handle_write_tag_float32(self, req):
+        return self.write_tag(req, 'REAL')
+
     def handle_write_tag_string(self, req):
         return self.write_tag_string(req, 'STRING')
 
@@ -197,6 +206,9 @@ class Service:
 
     def handle_write_tag_array_int64(self, req):
         return self.write_tag_array(req, 'LINT')
+
+    def handle_write_tag_array_float32(self, req):
+        return self.write_tag_array(req, 'REAL')
 
     def handle_write_tag_bool(self, req):
         return self.write_tag(req, 'BOOL')
