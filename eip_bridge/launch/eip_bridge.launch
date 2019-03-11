@@ -1,11 +1,20 @@
 <launch>
-  <arg name="ip" default="192.168.0.1" doc="IP address of PLC"/>
+  <arg name="sim" default="true"/>
   <arg name="pub_rate" default="10" doc="rate of topic publisher (Hz)"/>
   <arg name="config_file" default="$(find eip_bridge)/example/eip_config.yaml"/>
+  <arg name="ip" default="192.168.0.1" unless="$(arg sim)" doc="IP address of PLC"/>
 
-  <node name="eip_bridge" pkg="eip_bridge" type="eip_bridge_node.py" output="screen">
-    <param name="ip"         value="$(arg ip)"/>
-    <param name="pub_rate"    value="$(arg pub_rate)"/>
-    <rosparam command="load" file="$(arg config_file)" />
-  </node>
+  <group if="$(arg sim)">
+    <node name="eip_bridge_simulator" pkg="eip_bridge" type="eip_bridge_simulator_node.py" output="screen">
+      <param name="pub_rate"    value="$(arg pub_rate)"/>
+      <rosparam command="load" file="$(arg config_file)" />
+    </node>
+  </group>
+  <group unless="$(arg sim)">
+    <node name="eip_bridge" pkg="eip_bridge" type="eip_bridge_node.py" output="screen">
+      <param name="ip"         value="$(arg ip)"/>
+      <param name="pub_rate"    value="$(arg pub_rate)"/>
+      <rosparam command="load" file="$(arg config_file)" />
+    </node>
+  </group>
 </launch>
