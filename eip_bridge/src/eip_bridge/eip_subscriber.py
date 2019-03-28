@@ -28,7 +28,7 @@ class Subscriber:
             raise
 
         try:
-            rospy.Subscriber(topic_name, eval(topic_base_type), self.callback)
+            rospy.Subscriber(topic_name, eval(topic_base_type), self.callback, queue_size=1)
         except Exception as e:
             raise
 
