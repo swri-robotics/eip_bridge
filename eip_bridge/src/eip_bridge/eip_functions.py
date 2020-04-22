@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import re
 from threading import Lock
 from pycomm.ab_comm.clx import Driver as ClxDriver

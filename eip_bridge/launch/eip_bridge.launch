@@ -1,5 +1,6 @@
+<?xml version="1.0"?>
 <launch>
-  <arg name="sim" default="true"/>
+  <arg name="sim" default="true" doc="Simulation flag"/>
   <arg name="pub_rate" default="10" doc="rate of topic publisher (Hz)"/>
   <arg name="config_file" default="$(find eip_bridge)/example/eip_config.yaml"/>
   <arg name="ip" default="192.168.0.1" unless="$(arg sim)" doc="IP address of PLC"/>
