@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import rospy
 import re
 from eip_functions import EIPFunctions

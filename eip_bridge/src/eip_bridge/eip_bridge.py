@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# WARING: pip install pycomm may not install the latest pycomm; better to install from the github repo
+# WARNING: pip install pycomm may not install the latest pycomm; better to install from the github repo
 
 import rospy
 import signal

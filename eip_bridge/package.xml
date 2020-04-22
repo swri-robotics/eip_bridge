@@ -2,11 +2,11 @@
 <package format="2">
   <name>eip_bridge</name>
   <version>0.1.0</version>
-  <license>BSD</license>
+  <license>Apache 2.0</license>
 
   <description>EIP bridge to/from ROS messages</description>
 
-  <maintainer email="wmccormick@swri.org">Bill McCormick</maintainer>
+  <maintainer email="michael.ripperger@swri.org">Michael Ripperger</maintainer>
   <author email="wmccormick@swri.org">Bill McCormick</author>
   <author email="andrew64ce@gmail.com">Andrew Cunningham</author>
   <author email="jzoss@swri.org">Jeremy Zoss</author>
@@ -15,5 +15,4 @@
 
   <depend>eip_msgs</depend>
   <depend>rospy</depend>
-
 </package>

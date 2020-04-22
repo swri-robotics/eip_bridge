@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# WARING: pip install pycomm may not install the latest pycomm; better to install from the github repo
+# WARNING: pip install pycomm may not install the latest pycomm; better to install from the github repo
 
 import rospy
 import signal
@@ -55,7 +55,7 @@ class PLCSimulator:
                     length = cfg['length']
 
                     try:
-                        value = cfg['value']
+                        value = cfg['sim_value']
                     except KeyError as value_ke:
                         rospy.logwarn("'{0}' entry does not exist for '{1}'; setting '{0}' to 'None'".format(value_ke.message, tag_name))
                         value = None
