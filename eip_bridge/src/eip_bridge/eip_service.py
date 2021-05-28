@@ -28,7 +28,7 @@ class Service:
                 raise Exception('Tag value is empty')
 
         except Exception as e:
-            error = e.message
+            error = '{}'.format(e)
             success = False
 
         if tag_value is None:
@@ -50,7 +50,7 @@ class Service:
                 raise Exception('Tag value is empty')
 
         except Exception as e:
-            error = e.message
+            error = '{}'.format(e)
             success = False
 
         if tag_value is None:
@@ -75,7 +75,7 @@ class Service:
                 raise Exception('"{}" tag has length of 0'.format(req.tag_name))
 
         except Exception as e:
-            error = e.message
+            error = '{}'.format(e)
             success = False
 
         return self.response_type(tag_value, success, error)
@@ -98,7 +98,7 @@ class Service:
 
         except Exception as e:
             tag_list = ''
-            error = e.message
+            error = '{}'.format(e)
             success = False
 
         return self.response_type(tag_list, success, error)
@@ -121,7 +121,7 @@ class Service:
 
         except Exception as e:
             tag_list = ''
-            error = e.message
+            error = '{}'.format(e)
             success = False
 
         return self.response_type(tag_list, success, error)
@@ -135,7 +135,7 @@ class Service:
                 self.plc.write_tag_array(req.tag_name, list(req.tag_value), typ)
 
         except Exception as e:
-            error = e.message
+            error = '{}'.format(e)
             success = False
 
         return self.response_type(success, error)
@@ -192,7 +192,7 @@ class Service:
         return self.write_tag(req, 'REAL')
 
     def handle_write_tag_string(self, req):
-        return self.write_tag_string(req, 'STRING')
+        return self.write_tag_string(req)
 
     def handle_write_tag_array_int8(self, req):
         return self.write_tag_array(req, 'SINT')
@@ -211,4 +211,3 @@ class Service:
 
     def handle_write_tag_bool(self, req):
         return self.write_tag(req, 'BOOL')
-

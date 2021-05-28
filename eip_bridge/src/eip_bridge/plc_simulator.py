@@ -1,6 +1,4 @@
 import rospy
-import signal
-from time import sleep
 
 
 class Tag:
@@ -8,13 +6,13 @@ class Tag:
         self.name = name
         self.value = value
 
-    def getName(self):
+    def get_name(self):
         return self.name
 
-    def getValue(self):
+    def get_value(self):
         return self.value
 
-    def setValue(self, value):
+    def set_value(self, value):
         self.value = value
 
 
@@ -36,7 +34,7 @@ class PLCSimulator:
     def add_tag(self, tag_name, length, value=None):
         tag = Tag(tag_name, value)
         if length > 0:
-            tag.setValue(zip(range(length), [value for i in range(0, length)]))
+            tag.set_value(zip(range(length), [value for value in range(0, length)]))
         self.tags[tag_name] = tag
 
     def parse_config(self, config):
@@ -55,19 +53,18 @@ class PLCSimulator:
                         try:
                             value = cfg['sim_value']
                         except KeyError as value_ke:
-                            rospy.logwarn(
-                                "'{0}' entry does not exist for '{1}'; setting '{0}' to 'None'".format(value_ke.message,
-                                                                                                       tag_name))
+                            rospy.logwarn("'{0}' entry does not exist for '{1}'; setting '{0}' to 'None'"
+                                          .format(value_ke, tag_name))
                             value = None
 
                         self.add_tag(tag_name, length, value)
 
                     except KeyError as ke:
-                        rospy.logwarn("'{0}' entry does not exist".format(ke.message))
+                        rospy.logwarn("'{0}' entry does not exist".format(ke))
                     except Exception as ex:
-                        rospy.logwarn("Exception: {0}".format(ex.message))
+                        rospy.logwarn("Exception: {0}".format(ex))
 
-            except Exception as e:
+            except Exception:
                 rospy.logwarn("No tags defined in '{0}' namespace".format(ns))
 
     def write_to_tag(self, tag_name, value):
@@ -78,7 +75,7 @@ class PLCSimulator:
                 return tag_name
 
             except KeyError as e:
-                raise Exception('Tag "{}" does not exist'.format(e.message))
+                raise Exception('Tag "{}" does not exist'.format(e))
 
         else:
             raise Exception('PLC is not currently connected')
@@ -87,10 +84,10 @@ class PLCSimulator:
         if self.is_connected():
             try:
                 tag = self.tags[tag_name]
-                return tag.getValue()
+                return tag.get_value()
 
             except KeyError as e:
-                raise Exception('Tag "{}" does not exist'.format(e.message))
+                raise Exception('Tag "{}" does not exist'.format(e))
 
         else:
             raise Exception('PLC is not currently connected')

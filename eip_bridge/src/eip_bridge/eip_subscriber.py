@@ -1,5 +1,5 @@
 import rospy
-from .eip_functions import EIPFunctions
+from .eip_functions import convert_topic_type, topic_to_tag
 from std_msgs.msg import *
 
 
@@ -16,21 +16,18 @@ class Subscriber:
         self.plc = plc
 
         try:
-            self.plc_tag = tag_name or EIPFunctions.topic_to_tag(topic_name)
+            self.plc_tag = tag_name or topic_to_tag(topic_name)
         except Exception as e:
-            rospy.logerr("Error: setting subscriber on topic {0}: {1}".format(topic_name, e.message))
+            rospy.logerr("Error: setting subscriber on topic {0}: {1}".format(topic_name, e))
             raise
 
         try:
-            self.plc_tag_type = EIPFunctions.convert_topic_type(topic_base_type)
+            self.plc_tag_type = convert_topic_type(topic_base_type)
         except Exception as e:
-            rospy.logerr("Error: setting subscriber on topic type {0}: {1}".format(topic_base_type, e.message))
+            rospy.logerr("Error: setting subscriber on topic type {0}: {1}".format(topic_base_type, e))
             raise
 
-        try:
-            rospy.Subscriber(topic_name, eval(topic_base_type), self.callback, queue_size=1)
-        except Exception as e:
-            raise
+        rospy.Subscriber(topic_name, eval(topic_base_type), self.callback, queue_size=1)
 
     def callback(self,  msg):
         """Update EIP data when a new ROS message is received"""
@@ -46,6 +43,6 @@ class Subscriber:
             else:
                 result = self.plc.write_tag_array(self.plc_tag, list(msg.data), self.plc_tag_type)
         except Exception as e:
-            result = e.message
+            result = '{}'.format(e)
         finally:
             return result
