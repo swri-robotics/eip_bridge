@@ -20,14 +20,8 @@ catkin_package(
 
 catkin_install_python(
   PROGRAMS
-    src/eip_bridge/eip_bridge_node.py
-    src/eip_bridge/eip_bridge_simulator_node.py
-    src/eip_bridge/eip_bridge.py
-    src/eip_bridge/eip_functions.py
-    src/eip_bridge/eip_publisher.py
-    src/eip_bridge/eip_service.py
-    src/eip_bridge/eip_subscriber.py
-    src/eip_bridge/plc_simulator.py
+    scripts/eip_bridge_node.py
+    scripts/eip_bridge_simulator_node.py
   DESTINATION
     ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

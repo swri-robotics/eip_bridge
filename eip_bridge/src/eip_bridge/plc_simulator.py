@@ -1,29 +1,25 @@
-#!/usr/bin/env python
-# WARNING: pip install pycomm may not install the latest pycomm; better to install from the github repo
-
 import rospy
-import signal
 
-from time import sleep
 
 class Tag:
     def __init__(self, name, value=None):
         self.name = name
         self.value = value
 
-    def getName(self):
+    def get_name(self):
         return self.name
 
-    def getValue(self):
+    def get_value(self):
         return self.value
 
-    def setValue(self, value):
+    def set_value(self, value):
         self.value = value
+
 
 class PLCSimulator:
     def __init__(self):
-      self.tags = {}
-      self.active = False
+        self.tags = {}
+        self.active = False
 
     def is_connected(self):
         return self.active
@@ -38,37 +34,38 @@ class PLCSimulator:
     def add_tag(self, tag_name, length, value=None):
         tag = Tag(tag_name, value)
         if length > 0:
-            tag.setValue(zip(range(length), [value for i in range(0, length)]))
+            tag.set_value(zip(range(length), [value for value in range(0, length)]))
         self.tags[tag_name] = tag
 
     def parse_config(self, config):
-      # Try to load tags from the publishers namespace
-      for ns in config:
-          # Try to load the entries under each namespace
-          try:
-              entry = config[ns]
+        # Try to load tags from the publishers namespace
+        for ns in config:
+            # Try to load the entries under each namespace
+            try:
+                entry = config[ns]
 
-              rospy.loginfo("Attempting to load tags from '{0}' namespace".format(ns))
-              for cfg in entry:
-                  try:
-                    tag_name = cfg['tag']
-                    length = cfg['length']
-
+                rospy.loginfo("Attempting to load tags from '{0}' namespace".format(ns))
+                for cfg in entry:
                     try:
-                        value = cfg['sim_value']
-                    except KeyError as value_ke:
-                        rospy.logwarn("'{0}' entry does not exist for '{1}'; setting '{0}' to 'None'".format(value_ke.message, tag_name))
-                        value = None
+                        tag_name = cfg['tag']
+                        length = cfg['length']
 
-                    self.add_tag(tag_name, length, value)
+                        try:
+                            value = cfg['sim_value']
+                        except KeyError as value_ke:
+                            rospy.logwarn("'{0}' entry does not exist for '{1}'; setting '{0}' to 'None'"
+                                          .format(value_ke, tag_name))
+                            value = None
 
-                  except KeyError as ke:
-                      rospy.logwarn("'{0}' entry does not exist".format(ke.message))
-                  except Exception as ex:
-                      rospy.logwarn("Exception: {0}".format(ex.message))
+                        self.add_tag(tag_name, length, value)
 
-          except Exception as e:
-              rospy.logwarn("No tags defined in '{0}' namespace".format(ns))
+                    except KeyError as ke:
+                        rospy.logwarn("'{0}' entry does not exist".format(ke))
+                    except Exception as ex:
+                        rospy.logwarn("Exception: {0}".format(ex))
+
+            except Exception:
+                rospy.logwarn("No tags defined in '{0}' namespace".format(ns))
 
     def write_to_tag(self, tag_name, value):
         if self.is_connected():
@@ -78,20 +75,19 @@ class PLCSimulator:
                 return tag_name
 
             except KeyError as e:
-                raise Exception('Tag "{}" does not exist'.format(e.message))
+                raise Exception('Tag "{}" does not exist'.format(e))
 
         else:
             raise Exception('PLC is not currently connected')
-
 
     def read_from_tag(self, tag_name):
         if self.is_connected():
             try:
                 tag = self.tags[tag_name]
-                return tag.getValue()
+                return tag.get_value()
 
             except KeyError as e:
-                raise Exception('Tag "{}" does not exist'.format(e.message))
+                raise Exception('Tag "{}" does not exist'.format(e))
 
         else:
             raise Exception('PLC is not currently connected')
