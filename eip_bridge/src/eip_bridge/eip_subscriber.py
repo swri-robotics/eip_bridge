@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-
 import rospy
-from eip_functions import EIPFunctions
+from .eip_functions import EIPFunctions
 from std_msgs.msg import *
 
 

@@ -1,20 +1,18 @@
-#!/usr/bin/env python
-# WARNING: pip install pycomm may not install the latest pycomm; better to install from the github repo
-
 import rospy
 import signal
 
 from time import sleep
 
-from eip_publisher import Publisher
-from eip_subscriber import Subscriber
-from eip_service import Service
+from .eip_publisher import Publisher
+from .eip_subscriber import Subscriber
+from .eip_service import Service
 from eip_msgs.srv import SetMode
 from eip_msgs.srv import SetModeRequest
 from eip_msgs.srv import SetModeResponse
 
 from pycomm.ab_comm.clx import DataError
 from pycomm.cip.cip_base import CommError
+
 
 class EIPBridge:
     """The main EIP Bridge communication object"""
