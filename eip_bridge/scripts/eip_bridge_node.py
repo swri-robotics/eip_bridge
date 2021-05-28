@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 
-from eip_bridge import EIPBridge
-from eip_msgs.srv import SetModeRequest
-from eip_functions import EIPFunctions
+from eip_bridge.eip_bridge import EIPBridge
+from eip_bridge.eip_functions import EIPFunctions
 import rospy
-from time import sleep
 
 
-if __name__ == '__main__':
-    rospy.init_node('eip_bridge_node', anonymous = True)
+def main():
+    rospy.init_node('eip_bridge_node', anonymous=True)
 
     # Get the parameters
     try:
@@ -37,3 +35,6 @@ if __name__ == '__main__':
 
     bridge.plc.disconnect_plc()
 
+
+if __name__ == '__main__':
+    main()

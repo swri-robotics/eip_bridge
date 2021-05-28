@@ -1,19 +1,16 @@
 #!/usr/bin/env python
 
-from eip_bridge import EIPBridge
-from eip_msgs.srv import SetModeRequest
-from plc_simulator import PLCSimulator
+from eip_bridge.eip_bridge import EIPBridge
+from eip_bridge.plc_simulator import PLCSimulator
 import rospy
-from time import sleep
 
 
-if __name__ == '__main__':
-    rospy.init_node('eip_bridge_node', anonymous = True)
+def main():
+    rospy.init_node('eip_bridge_node', anonymous=True)
 
     # Get the parameters
     try:
         config = rospy.get_param('~config')
-
     except:
         rospy.logfatal('Failed to get "config" parameter')
         exit(2)
@@ -34,3 +31,7 @@ if __name__ == '__main__':
     rospy.spin()
 
     bridge.plc.disconnect_plc()
+
+
+if __name__ == '__main__':
+    main()
