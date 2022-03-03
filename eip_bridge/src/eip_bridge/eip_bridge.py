@@ -5,7 +5,7 @@ from eip_msgs.srv import SetMode
 from eip_msgs.srv import SetModeRequest
 from eip_msgs.srv import SetModeResponse
 
-from pycomm.ab_comm.clx import DataError
+from pycomm.cip.cip_base import DataError
 from pycomm.cip.cip_base import CommError
 import rospy
 from time import sleep
